@@ -4,9 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header>
+      <h1>Library</h1>
+    </header>
+    <main>
+      <button>Add New Book</button>
+      <section class="book-cards">
+        <div class="book-card">
+          <h2>Book Title</h2>
+          <h3>by <span class="author">author</span></h3>
+          <p class="book-info">Taste book info part</p>
+          <p>Pages: <span class="pages">123</span></p>
+          <button class="read-stat not-read">Read</button>
+          <button class="remove">Remove</button>
+        </div>
+        <div class="book-card">
+          <h2>Book Title</h2>
+          <h3>by <span class="author">author</span></h3>
+          <p class="book-info">Taste book info part</p>
+          <p>Pages: <span class="pages">123</span></p>
+          <button class="read-stat not-read">Read</button>
+          <button class="remove">Remove</button>
+        </div>
+      </section>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>
