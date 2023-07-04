@@ -41,6 +41,7 @@ const overlay = document.querySelector(".overlay");
 const closeBtn = document.querySelector(".btn-close");
 const formSubmit = document.querySelector("#form");
 let bookList = [...document.querySelectorAll(".remove")];
+let bookStatList = [...document.querySelectorAll(".read-stat")];
 
 function listBooks () {
   // function that loops through the array and displays each book 
@@ -49,7 +50,9 @@ function listBooks () {
     bookCards.innerHTML += createBookElement(book, index);
 
     bookList = [...document.querySelectorAll(".remove")];
+    bookStatList = [...document.querySelectorAll(".read-stat")];
     removeBook(bookList);
+    changeBookReadSat(bookStatList)
   });
 } 
 
@@ -100,9 +103,12 @@ formSubmit.addEventListener('submit', (e) => {
 
   clearForm();
   closeForm();
+
   bookList = [...document.querySelectorAll(".remove")];
+  bookStatList = [...document.querySelectorAll(".read-stat")];
 
   removeBook(bookList);
+  changeBookReadSat(bookStatList)
 });
 
 function removeBook(bookList){
@@ -113,6 +119,19 @@ function removeBook(bookList){
       const bookIndex = target.getAttribute('data-index');
       myLibrary.splice(bookIndex, 1);
       target.parentElement.remove();
+    });
+  });
+}
+
+function changeBookReadSat(bookStatList){
+  // function that changes book read status
+  bookStatList.forEach((book) => {
+    book.addEventListener('click', (e) => {
+    const target = e.target;
+    const statIndex = target.getAttribute('data-index');
+    myLibrary[statIndex].read = myLibrary[statIndex].read ? false : true;
+    target.className = `read-stat ${myLibrary[statIndex].read ? "read" : "not-read"}`;
+    target.textContent = `${myLibrary[statIndex].read ? "Read" : "Not Read Yet"}`;
     });
   });
 }
