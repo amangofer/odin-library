@@ -17,7 +17,31 @@
       <h1>Library</h1>
     </header>
     <main>
-      <button>Add New Book</button>
+      <button id="add-book">Add New Book</button>
+      <div class="new-book-form">
+        <button class="btn-close">&times;</button>
+        <form action="#" method="get" id="form">
+          <h1>New Book Form</h1>
+          <label for="title">Book Title: 
+            <input id="title" name="title" type="text" placeholder="Eg. The Hobbits" required />
+          </label>
+          <label for="author">Book Author: 
+            <input id="author" name="author" type="text" placeholder="J. R. R. Tolkien" required />
+          </label>
+          <label for="num-of-pages">Number of Pages: 
+            <input id="num-of-pages" name="num-of-pages" type="number" placeholder="295" required />
+          </label>
+          <label for="read-status">Number of Pages: 
+            <select name="read-status" id="read-status" required>
+              <option value="" disabled selected>Have you read this book?</option>
+              <option value="true">Yes, I have read this book.</option>
+              <option value="false">No, I haven't read this book.</option>
+            </select>
+          </label>
+          <input id="btn-submit" type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="overlay"></div>
       <section class="book-cards"></section>
     </main>
     <script src="script.js"></script>
