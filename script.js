@@ -20,7 +20,7 @@ const book2 = new Book ("Eloquent JavaScript", "Marijn Haverbeke", 463, false);
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 
-function createBookElement(book) {
+function createBookElement(book, index) {
   // function that create Element  
   return `
         <div class="book-card">
@@ -29,25 +29,29 @@ function createBookElement(book) {
             <h4>Description:</h4>
             <p class="book-info">${book.info()}</p>
             <p>Pages: <span class="pages">${book.pages}</span></p>
-            <button class="read-stat ${book.read ? "read" : "not-read"}">${book.read ? "Read" : "Not Read Yet"}</button>
-            <button class="remove">Remove</button>
+            <button data-index = ${index} class="read-stat ${book.read ? "read" : "not-read"}">${book.read ? "Read" : "Not Read Yet"}</button>
+            <button data-index = ${index} class="remove">Remove</button>
         </div>
-  `;
+      `;
 }
-
-function listBooks () {
-  // function that loops through the array and displays each book 
-  const bookCards = document.querySelector('.book-cards');
-  myLibrary.forEach((book) => {
-    bookCards.innerHTML += createBookElement(book);
-  });
-} 
 
 const addNewBook = document.querySelector("#add-book");
 const newBookForm = document.querySelector(".new-book-form");
 const overlay = document.querySelector(".overlay");
 const closeBtn = document.querySelector(".btn-close");
 const formSubmit = document.querySelector("#form");
+let bookList = [...document.querySelectorAll(".remove")];
+
+function listBooks () {
+  // function that loops through the array and displays each book 
+  const bookCards = document.querySelector('.book-cards');
+  myLibrary.forEach((book, index) => {
+    bookCards.innerHTML += createBookElement(book, index);
+
+    bookList = [...document.querySelectorAll(".remove")];
+    removeBook(bookList);
+  });
+} 
 
 function openForm() {
   // function that open the form
@@ -58,6 +62,13 @@ function closeForm() {
   // function that closes the form
   newBookForm.classList.remove("active");
   overlay.classList.remove("active");
+}
+function clearForm (){
+  // function that clear the form values
+  document.querySelector("#title").value = "";
+  document.querySelector("#author").value = "";
+  document.querySelector("#num-of-pages").value = "";
+  document.querySelector("#read-status").value = "";
 }
 
 addNewBook.addEventListener('click', openForm);
@@ -75,23 +86,33 @@ function createBookObj() {
   return newBook;
 }
 
-function clearForm (){
-  // function that clear the form values
-  document.querySelector("#title").value = "";
-  document.querySelector("#author").value = "";
-  document.querySelector("#num-of-pages").value = "";
-  document.querySelector("#read-status").value = "";
-}
+
+listBooks();
 
 formSubmit.addEventListener('submit', (e) => {
   e.preventDefault();
   
   const newBook = createBookObj();
   addBookToLibrary(newBook);
+  const index = myLibrary.length - 1;
   const bookCards = document.querySelector('.book-cards');
-  bookCards.innerHTML += createBookElement(newBook);
+  bookCards.innerHTML += createBookElement(newBook, index);
+
   clearForm();
   closeForm();
+  bookList = [...document.querySelectorAll(".remove")];
+
+  removeBook(bookList);
 });
 
-listBooks();
+function removeBook(bookList){
+  // function that removes a book
+  bookList.forEach((book) => {
+    book.addEventListener('click', (e) => {
+      const target = e.target;
+      const bookIndex = target.getAttribute('data-index');
+      myLibrary.splice(bookIndex, 1);
+      target.parentElement.remove();
+    });
+  });
+}
